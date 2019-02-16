@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<ArrayOfData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Data xsi:type="TreeData">
+    <id>wood</id>
+    <initialQuantity>1</initialQuantity>
+    <spriteId>log</spriteId>
+    <respawnTime>5</respawnTime>
+    <requiredLevel>0</requiredLevel>
+    <initialProcessTime>3</initialProcessTime>
+    <name>Log</name>
+    <description>Some wood</description>
+    <sellPrice>100</sellPrice>
+  </Data>
+</ArrayOfData>

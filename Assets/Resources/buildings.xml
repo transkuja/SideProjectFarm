@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<ArrayOfData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Data xsi:type="BuildingData">
+    <id>defaultbuilding</id>
+    <initialQuantity>200</initialQuantity>
+    <spriteId />
+    <respawnTime>2</respawnTime>
+    <requiredLevel>0</requiredLevel>
+    <initialProcessTime>0</initialProcessTime>
+  </Data>
+</ArrayOfData>
