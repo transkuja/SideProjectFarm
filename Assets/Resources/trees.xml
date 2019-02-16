@@ -4,7 +4,7 @@
     <id>wood</id>
     <initialQuantity>1</initialQuantity>
     <spriteId>log</spriteId>
-    <respawnTime>5</respawnTime>
+    <respawnTime>60</respawnTime>
     <requiredLevel>0</requiredLevel>
     <initialProcessTime>3</initialProcessTime>
     <name>Log</name>

@@ -27,6 +27,7 @@ public class PlayerDataManager : Singleton<PlayerDataManager>
     {
         get
         {
+            Debug.Log(inventory.Count);
             return inventory;
         }
     }
@@ -66,8 +67,13 @@ public class PlayerDataManager : Singleton<PlayerDataManager>
 
     }
 
-    public void AddItemToInventory<T>(string _itemId, int _quantity = 1) where T : HarvestableData
+    public int AddItemToInventory<T>(string _itemId, int _quantity = 1) where T : HarvestableData
     {
+        if (IsInventoryFull(_itemId, _quantity))
+            return 0;
+
+        int returnValue = -1;
+
         InventoryItem itemInInventory = Inventory.Find(x => x.itemData.id == _itemId && x.quantity < GlobalDesigner.maxInventoryStack);
         int remaining = _quantity;
         if (itemInInventory != null)
@@ -81,6 +87,12 @@ public class PlayerDataManager : Singleton<PlayerDataManager>
                 newItem.quantity = remaining;
                 remaining = remaining - GlobalDesigner.maxInventoryStack;
                 Inventory.Add(newItem);
+
+                if (Inventory.Count == GetInventorySize())
+                {
+                    if (remaining < GlobalDesigner.maxInventoryStack && remaining > 0)
+                        returnValue = remaining;
+                }
             }
         }
         else
@@ -89,8 +101,12 @@ public class PlayerDataManager : Singleton<PlayerDataManager>
 
             if (remaining < 0)
             {
-                InventoryItem newItem = new InventoryItem(DatabaseManager.GetRowFromId<T>(_itemId), _quantity);
-                Inventory.Add(newItem);
+                if (Inventory.Count < GetInventorySize())
+                {
+                    InventoryItem newItem = new InventoryItem(DatabaseManager.GetRowFromId<T>(_itemId), _quantity);
+                    Inventory.Add(newItem);
+                    returnValue = _quantity;
+                }
             }
             else
             {
@@ -98,6 +114,8 @@ public class PlayerDataManager : Singleton<PlayerDataManager>
                 {
                     InventoryItem newItem = new InventoryItem(DatabaseManager.GetRowFromId<T>(_itemId), GlobalDesigner.maxInventoryStack);
                     Inventory.Add(newItem);
+                    if (remaining < GlobalDesigner.maxInventoryStack)
+                        returnValue = remaining;
 
                     while (remaining > 0 && Inventory.Count < GetInventorySize())
                     {
@@ -105,13 +123,38 @@ public class PlayerDataManager : Singleton<PlayerDataManager>
                         newItem.quantity = remaining;
                         remaining = remaining - GlobalDesigner.maxInventoryStack;
                         Inventory.Add(newItem);
+                        if (remaining < GlobalDesigner.maxInventoryStack && returnValue == -1)
+                            returnValue = remaining;
                     }
                 }
+                else
+                    returnValue = 0;
             }
         }
 
         if (OnUpdateInventoryCallback != null)
             OnUpdateInventoryCallback();
+
+        return returnValue;
+    }
+
+    public bool IsInventoryFull(string _nextIdToInsert = "", int quantity = 0)
+    {
+        if (string.IsNullOrEmpty(_nextIdToInsert))
+        {
+            return Inventory.Count >= GetInventorySize();
+        }
+        else
+        {
+            if (Inventory.Count < GetInventorySize())
+                return false;
+
+            List<InventoryItem> itemInInventory = Inventory.FindAll(x => x.itemData.id == _nextIdToInsert && x.quantity < GlobalDesigner.maxInventoryStack);
+            if (itemInInventory == null)
+                return true;
+        }
+
+        return false;
     }
 
     public void RemoveItemFromInventory(string _itemIdToRemove, int _quantity = 99)

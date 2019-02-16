@@ -27,7 +27,7 @@ public class Tree : Interactable {
     IEnumerator CutCoroutine()
     {
         PlayerDataManager.Instance.controlsLock = true;
-        visual.GetComponentInChildren<Renderer>().material.color = Color.green;
+        visual.GetComponentInChildren<Renderer>().material.SetColor("_Color", Color.green);
 
         yield return new WaitForSeconds(((TreeData)interactableData).initialProcessTime);
 

@@ -38,6 +38,13 @@ public class InventoryUISlot : UISlotBase {
         }
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        if (data == null)
+            transform.GetComponent<Button>().onClick.RemoveAllListeners();
+    }
+
     public override void Refresh()
     {
         if (data == null)

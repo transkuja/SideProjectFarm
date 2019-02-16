@@ -32,7 +32,7 @@ public class UISlotBase : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         EventSystem.current.SetSelectedGameObject(null);
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         handler = GetComponentInParent<UIHandlerBase>();
 

@@ -5,22 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class FishUpgrade : Upgrade
 {
-    [System.Serializable]
-    public class Cost
-    {
-        public string itemId;
-        public int quantity;
-    }
-
-    // Upgrade settings -> editor setup? scriptable object? hard coded in UI?
-    public string upgradeName;
-    public bool isUnlocked;
-    public Sprite visual;
-    public int goldCost;
-    public Cost[] costs;
-    public int requiredJobLevel;
-    public GameObject[] dependency;
-
     // Upgrade core
     public float catchChance = 0.0f;
     public int numberOfFishIncrease = 0;

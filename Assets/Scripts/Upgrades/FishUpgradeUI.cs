@@ -33,4 +33,9 @@ public class FishUpgradeUI : UISlotBase
         base.OnEnable();
         Refresh();
     }
+
+    protected override Sprite UpdateSlotVisual()
+    {
+        return upgrade.visual;
+    }
 }

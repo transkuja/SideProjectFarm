@@ -15,7 +15,8 @@ public class Fish : Interactable {
     protected override void OnClickAction()
     {
         if (!PlayerDataManager.Instance.HasTheLevelToHarvest(Jobs.Fisher, ((FishData)interactableData).requiredLevel)
-                || PlayerDataManager.Instance.controlsLock)
+                || PlayerDataManager.Instance.controlsLock 
+                || PlayerDataManager.Instance.IsInventoryFull(interactableId, ((FishData)interactableData).initialQuantity + PlayerDataManager.Instance.fishUpgrades.numberOfFishIncrease))
             return;
 
         base.OnClickAction();
@@ -45,14 +46,20 @@ public class Fish : Interactable {
 
             int quantity = ((FishData)interactableData).initialQuantity + PlayerDataManager.Instance.fishUpgrades.numberOfFishIncrease;
 
+            quantity = PlayerDataManager.Instance.AddItemToInventory<FishData>(interactableData.id, quantity);
+            
             // Pop feedback
             GameObject feedback = Instantiate(Resources.Load<GameObject>("Feedback"), UIManager.Instance.transform);
             feedback.GetComponent<AscendingFeedback>().InitFeedback(((FishData)interactableData).LoadSprite(), quantity);
             feedback.transform.position = Camera.main.WorldToScreenPoint(transform.position);
             visual.GetComponentInChildren<Renderer>().material.color = Color.white;
 
-            PlayerDataManager.Instance.AddItemToInventory<FishData>(interactableData.id, quantity);
             PlayerDataManager.Instance.GainJobExp(Jobs.Fisher, ((FishData)interactableData).requiredLevel);
+            if (PlayerDataManager.Instance.IsInventoryFull(interactableId, quantity))
+            {
+                StopAutoFishing();
+                break;
+            }
         }
     }
 
@@ -79,12 +86,17 @@ public class Fish : Interactable {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 Debug.Log("Stop process");
-                isCoroutineActive = false;
-                PlayerDataManager.Instance.controlsLock = false;
-                visual.GetComponentInChildren<Renderer>().material.color = Color.white;
-                windowOpened = false;
-                StopCoroutine(fishing);
+                StopAutoFishing();
             }
         }
+    }
+
+    void StopAutoFishing()
+    {
+        isCoroutineActive = false;
+        PlayerDataManager.Instance.controlsLock = false;
+        visual.GetComponentInChildren<Renderer>().material.color = Color.white;
+        windowOpened = false;
+        StopCoroutine(fishing);
     }
 }

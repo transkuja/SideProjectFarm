@@ -7,16 +7,20 @@
     <respawnTime>2</respawnTime>
     <requiredLevel>2</requiredLevel>
     <initialProcessTime>5</initialProcessTime>
-    <test>hey</test>
+    <name>Angler</name>
+    <description>An ugly fish</description>
+    <sellPrice>250</sellPrice>
   </Data>
   <Data xsi:type="FishData">
     <id>tropical</id>
-    <initialQuantity>5</initialQuantity>
+    <initialQuantity>80</initialQuantity>
     <spriteId>tropical-fish</spriteId>
     <respawnTime>10</respawnTime>
     <requiredLevel>0</requiredLevel>
-    <initialProcessTime>2</initialProcessTime>
-    <test>hey</test>
+    <initialProcessTime>0.5</initialProcessTime>
+    <name>Tropical fish</name>
+    <description>A fish that likes to drink Oasis</description>
+    <sellPrice>10</sellPrice>
   </Data>
   <Data xsi:type="FishData">
     <id>salmon</id>
@@ -25,6 +29,8 @@
     <respawnTime>5</respawnTime>
     <requiredLevel>0</requiredLevel>
     <initialProcessTime>2</initialProcessTime>
-    <test>hey</test>
+    <name>Salmon</name>
+    <description>Perfect for sushi</description>
+    <sellPrice>120</sellPrice>
   </Data>
 </ArrayOfData>
