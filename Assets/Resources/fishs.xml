@@ -13,7 +13,7 @@
   </Data>
   <Data xsi:type="FishData">
     <id>tropical</id>
-    <initialQuantity>80</initialQuantity>
+    <initialQuantity>250</initialQuantity>
     <spriteId>tropical-fish</spriteId>
     <respawnTime>10</respawnTime>
     <requiredLevel>0</requiredLevel>
